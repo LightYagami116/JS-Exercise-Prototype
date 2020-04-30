@@ -38,20 +38,25 @@ Airplane.prototype.land = function () {
     - Give instances of Person a method `.toString()`:
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
-
 function Person(name, age) {
-  let stomach = [];
   this.name = name;
   this.age = age;
-  this.eat = false;
+  this.stomach = [];
   this.poop;
 }
-let stomach = [];
-Person.prototype.eat = function(){
-  //this.eat = stomach.push(i++);
-  //eat : function(){return stomach.push(1);}
+Person.prototype.eat = function(food){
+  if(this.stomach.length === 10){
+    return;
+  }else{
+    this.stomach.push(food);
+  }
 };
-
+Person.prototype.poop = function(){
+  this.stomach = [];
+};
+Person.prototype.toString = function(){
+  return `${this.name} ${this.age}`;
+};
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -69,8 +74,22 @@ Person.prototype.eat = function(){
 function Car(model, milesPerGallon) {
   this.model = model;
   this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
 }
 
+Car.prototype.fill = function(gallons){
+  this.tank += gallons;
+}
+Car.prototype.drive = function(distance){
+  this.odometer = distance + this.odometer;
+  this.tank = this.trank - distance / this.milesPerGallon;
+  if(this.tank < 0){
+    this.odometer = this.tank * this.milesPerGallon * this.odometer;
+    this.tank = 0;
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  }
+}
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -83,15 +102,27 @@ function Baby(name,age,favoriteToy) {
   this.age = age;
   this.favoriteToy = favoriteToy;
 }
+/*Baby.prototype.play = function(isPlaying){
+  this.isPlaying = true;
+}*/
+
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function(isPlaying){
+  this.isPlaying = true;
+}
+Baby.prototype.play = function(toy){
+  return 'trains';
+}
 
 /*
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1.
-  2.
-  3.
-  4.
+  1. what is the object calling?
+  2. how is it being called?
+  3. am i being called in as a method?
+  4. what scope am i in?
 */
 
 

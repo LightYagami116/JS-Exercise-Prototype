@@ -82,10 +82,11 @@ Car.prototype.fill = function(gallons){
   this.tank += gallons;
 }
 Car.prototype.drive = function(distance){
-  this.odometer = distance + this.odometer;
-  this.tank = this.trank - distance / this.milesPerGallon;
-  if(this.tank < 0){
-    this.odometer = this.tank * this.milesPerGallon * this.odometer;
+  if(this.tank * this.milesPerGallon > distance){
+    this.odometer = distance;
+    this.tank = this.tank - distance / this.milesPerGallon;
+  }else{
+    this.odometer = this.milesPerGallon * this.tank;
     this.tank = 0;
     return `I ran out of fuel at ${this.odometer} miles!`;
   }
